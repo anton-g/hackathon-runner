@@ -11,6 +11,7 @@ export class GameScene extends Phaser.Scene {
   private spikes!: Phaser.Physics.Arcade.Group
   private coins!: Coins
   private goals!: Goals
+  private scoreText!: Phaser.GameObjects.Text
 
   constructor() {
     super({
@@ -43,6 +44,9 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.15, 0.15)
 
     this.coins = new Coins(this.physics.world, this, map)
+    this.coins.onScoreUpdate = (score) => {
+      this.scoreText.setText(`Coins: ${score}`)
+    }
     this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
 
     this.spikes = new Spikes(this.physics.world, this, map)
@@ -53,6 +57,12 @@ export class GameScene extends Phaser.Scene {
 
     this.goals = new Goals(this.physics.world, this, map)
     this.physics.add.overlap(this.player, this.goals, () => console.log('win'))
+
+    this.scoreText = this.add.text(20, 30, `Coins: 0`, {
+      fontSize: '14px',
+      fill: 'black',
+    })
+    this.scoreText.setScrollFactor(0)
 
     this.setupAnimations()
   }
