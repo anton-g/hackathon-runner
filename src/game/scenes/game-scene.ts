@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import { Coins } from '../objects/Coins'
+import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
 import { Spikes } from '../objects/Spikes'
 const level = require('../assets/tilemaps/level1.json')
@@ -9,6 +10,7 @@ export class GameScene extends Phaser.Scene {
   private player!: Player
   private spikes!: Phaser.Physics.Arcade.Group
   private coins!: Coins
+  private goals!: Goals
 
   constructor() {
     super({
@@ -41,25 +43,16 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.15, 0.15)
 
     this.coins = new Coins(this.physics.world, this, map)
-    this.physics.add.overlap(
-      this.player,
-      this.coins,
-      this.coins.handleHit,
-      undefined,
-      this
-    )
+    this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
 
     this.spikes = new Spikes(this.physics.world, this, map)
-    this.physics.add.collider(
-      this.player,
-      this.spikes,
-      () => {
-        this.player.handleHit()
-        this.coins.reset()
-      },
-      undefined,
-      this
-    )
+    this.physics.add.collider(this.player, this.spikes, () => {
+      this.player.handleHit()
+      this.coins.reset()
+    })
+
+    this.goals = new Goals(this.physics.world, this, map)
+    this.physics.add.overlap(this.player, this.goals, () => console.log('win'))
 
     this.setupAnimations()
   }
