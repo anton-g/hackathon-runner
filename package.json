@@ -1,38 +1,44 @@
 {
-  "name": "runner-game",
-  "version": "0.0.1",
-  "description": "A small running game",
-  "main": "src/index.js",
-  "scripts": {
-    "build": "webpack --config webpack/prod.js ",
-    "start": "webpack-dev-server --config webpack/base.js --open"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anton-g/running-game.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
-  "bugs": {
-    "url": "https://github.com/anton-g/running-game/issues"
-  },
-  "homepage": "https://github.com/anton-g/running-game",
-  "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "babel-loader": "^8.0.6",
-    "clean-webpack-plugin": "^3.0.0",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "raw-loader": "^3.1.0",
-    "terser-webpack-plugin": "^2.2.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0",
-    "webpack-merge": "^4.2.2"
-  },
+  "name": "running-game",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "phaser": "^3.24.1"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "phaser": "^3.24.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

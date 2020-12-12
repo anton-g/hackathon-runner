@@ -1,0 +1,95 @@
+import Phaser from 'phaser'
+import { Player } from '../objects/Player'
+const level = require('../assets/tilemaps/level1.json')
+const playerAtlasJson = require('../assets/images/player_atlas.json')
+
+export class GameScene extends Phaser.Scene {
+  private player: Player | undefined
+  private spikes: Phaser.Physics.Arcade.Group | undefined
+
+  constructor() {
+    super({
+      key: 'GameScene',
+    })
+  }
+
+  preload(): void {
+    this.load.image('tiles', '/images/extruded-tileset.png')
+    this.load.atlas('player', '/images/player.png', playerAtlasJson)
+    this.load.image('spike', '/images/spike.png')
+    this.load.tilemapTiledJSON('map', level)
+  }
+
+  create(): void {
+    const map = this.make.tilemap({ key: 'map' })
+    const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
+    map.createStaticLayer('Cosmetics', tileset)
+
+    this.player = new Player(this, 'player')
+
+    const platforms = map.createStaticLayer('Platforms', tileset)
+    platforms.setCollisionByExclusion([-1], true)
+    this.physics.add.collider(this.player, platforms)
+
+    this.cameras.main.setBounds(0, 0, platforms.width, platforms.height)
+    this.cameras.main.startFollow(this.player, true, 0.15, 0.15)
+    this.spikes = this.physics.add.group({
+      allowGravity: false,
+      immovable: true,
+    })
+    const spikeObjects = map.getObjectLayer('Danger')['objects']
+    spikeObjects.forEach((spikeObject) => {
+      // Add new spikes to our sprite group, change the start y position to meet the platform
+      const spike = this.spikes!.create(
+        spikeObject.x,
+        spikeObject!.y! - spikeObject!.height!,
+        'spike'
+      ).setOrigin(0, 0)
+      spike.body.setSize(spike.width, spike.height - 12).setOffset(0, 12)
+    })
+    this.physics.add.collider(
+      this.player,
+      this.spikes,
+      this.player.handleHit,
+      undefined,
+      this
+    )
+
+    this.setupAnimations()
+  }
+
+  setupAnimations(): void {
+    this.anims.create({
+      key: 'idle',
+      frames: [{ key: 'player', frame: 'idle' }],
+      frameRate: 10,
+    })
+
+    this.anims.create({
+      key: 'jump_straight',
+      frames: [{ key: 'player', frame: 'jump_straight' }],
+      frameRate: 10,
+    })
+
+    this.anims.create({
+      key: 'jump_direction',
+      frames: [{ key: 'player', frame: 'jump_right' }],
+      frameRate: 10,
+    })
+
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNames('player', {
+        prefix: 'right_',
+        start: 1,
+        end: 2,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    })
+  }
+
+  update(): void {
+    this.player?.update()
+  }
+}
