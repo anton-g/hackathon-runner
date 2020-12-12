@@ -5,6 +5,11 @@ import spike from './assets/images/spike.png'
 import playerAtlas from './assets/images/player.png'
 import playerAtlasJson from './assets/images/player_atlas.json'
 
+const initialPlayerPosition = {
+  x: 55,
+  y: 380,
+}
+
 const config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
@@ -39,8 +44,8 @@ function preload() {
 
 function playerHit(player, spike) {
   player.setVelocity(0, 0)
-  player.setX(40)
-  player.setY(380)
+  player.setX(initialPlayerPosition.x)
+  player.setY(initialPlayerPosition.y)
   player.play('idle', true)
   player.setAlpha(0)
   let tw = this.tweens.add({
@@ -57,13 +62,17 @@ function create() {
   const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
   const platforms = map.createStaticLayer('Platforms', tileset)
   const cosmetics = map.createStaticLayer('Cosmetics', tileset)
-  this.cameras.main.setBounds(0, 0, platforms, 28 * 16)
+  this.cameras.main.setBounds(0, 0, platforms.width, platforms.height)
 
   platforms.setCollisionByExclusion(-1, true)
 
-  this.player = this.physics.add.sprite(40, 380, 'player')
+  this.player = this.physics.add.sprite(
+    initialPlayerPosition.x,
+    initialPlayerPosition.y,
+    'player'
+  )
   this.player.setBounce(0.1)
-  this.player.setCollideWorldBounds(true)
+  this.player.setCollideWorldBounds(false)
   this.physics.add.collider(this.player, platforms)
   this.cameras.main.startFollow(this.player, true, 0.15, 0.15)
   // const logo = this.add.image(400, 150, 'logo')
