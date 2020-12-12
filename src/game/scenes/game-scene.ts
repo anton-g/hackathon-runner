@@ -5,6 +5,7 @@ import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
 import { Spikes } from '../objects/Spikes'
+import { Wind } from '../objects/Wind'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -15,6 +16,7 @@ export class GameScene extends Phaser.Scene {
   private coins!: Coins
   private goals!: Goals
   private bouncers!: Bouncers
+  private wind!: Wind
   private scoreText!: Phaser.GameObjects.Text
   private animatedTiles: any
 
@@ -43,16 +45,14 @@ export class GameScene extends Phaser.Scene {
 
   create(): void {
     const map = this.make.tilemap({ key: 'map' })
+    this.player = new Player(this, 'player')
+
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
     map.createDynamicLayer('Cosmetics', tileset)
     const platforms = map.createDynamicLayer('Platforms', tileset)
     platforms.setCollisionByExclusion([-1], true)
 
     this.animatedTiles.init(map)
-
-    console.log(this.animatedTiles)
-
-    this.player = new Player(this, 'player')
 
     this.physics.add.collider(this.player, platforms)
 
@@ -79,6 +79,11 @@ export class GameScene extends Phaser.Scene {
       this.bouncers.handleHit(obj1, obj2)
       this.player.bounce()
     })
+
+    this.wind = new Wind(this.physics.world, this, map)
+    this.physics.add.overlap(this.player, this.wind, () =>
+      this.wind.apply(this.player)
+    )
 
     this.scoreText = this.add.text(20, 30, `Coins: 0`, {
       fontSize: '14px',
