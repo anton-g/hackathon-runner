@@ -20,6 +20,7 @@ export class Coins extends Phaser.Physics.Arcade.Group {
 
     this.reset = this.reset.bind(this)
     this.setScore = this.setScore.bind(this)
+    this.addCoin = this.addCoin.bind(this)
     this.handleHit = this.handleHit.bind(this)
   }
 
@@ -42,6 +43,15 @@ export class Coins extends Phaser.Physics.Arcade.Group {
   private addCoin(x: number, y: number): void {
     const coin = this.create(x, y, 'coin')
     coin.body.setSize(coin.width - 4, coin.height - 4)
+
+    this.scene.tweens.add({
+      targets: coin,
+      x: coin.x + 1,
+      duration: 300,
+      ease: 'Sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    })
   }
 
   private setScore(score: number) {
