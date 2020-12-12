@@ -1,16 +1,19 @@
 import Phaser from 'phaser'
+import { Bouncers } from '../objects/Bouncers'
 import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
 import { Spikes } from '../objects/Spikes'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
+const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
 
 export class GameScene extends Phaser.Scene {
   private player!: Player
   private spikes!: Phaser.Physics.Arcade.Group
   private coins!: Coins
   private goals!: Goals
+  private bouncers!: Bouncers
   private scoreText!: Phaser.GameObjects.Text
 
   constructor() {
@@ -22,6 +25,7 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     this.load.image('tiles', '/images/extruded-tileset.png')
     this.load.atlas('player', '/images/player.png', playerAtlasJson)
+    this.load.atlas('bouncer', '/images/bouncer.png', bouncerAtlasJson)
     this.load.image('spike', '/images/spike.png')
     this.load.image('coin', '/images/coin.png')
     this.load.image('heart', '/images/heart.png')
@@ -57,6 +61,12 @@ export class GameScene extends Phaser.Scene {
 
     this.goals = new Goals(this.physics.world, this, map)
     this.physics.add.overlap(this.player, this.goals, () => console.log('win'))
+
+    this.bouncers = new Bouncers(this.physics.world, this, map)
+    this.physics.add.overlap(this.player, this.bouncers, (obj1, obj2) => {
+      this.bouncers.handleHit(obj1, obj2)
+      this.player.bounce()
+    })
 
     this.scoreText = this.add.text(20, 30, `Coins: 0`, {
       fontSize: '14px',
@@ -95,6 +105,18 @@ export class GameScene extends Phaser.Scene {
       }),
       frameRate: 10,
       repeat: -1,
+    })
+
+    this.anims.create({
+      key: 'bouncer',
+      frames: [
+        { key: 'bouncer', frame: 'down' },
+        { key: 'bouncer', frame: 'middle' },
+        { key: 'bouncer', frame: 'up' },
+        { key: 'bouncer', frame: 'middle' },
+        { key: 'bouncer', frame: 'down' },
+      ],
+      frameRate: 30,
     })
   }
 

@@ -15,10 +15,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this)
     this.setCollideWorldBounds(false)
 
+    this.body.setSize(this.width - 4, this.height - 4).setOffset(2, 4)
     this.initInput()
     this.setBounce(0.1)
 
     this.handleHit = this.handleHit.bind(this)
+    this.bounce = this.bounce.bind(this)
   }
 
   private initInput(): void {
@@ -46,6 +48,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         this.enableInput = true
       },
     })
+  }
+
+  bounce() {
+    this.setVelocityY(-500)
   }
 
   private handleInput(): void {
