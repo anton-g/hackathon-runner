@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { Coins } from '../objects/Coins'
 import { Player } from '../objects/Player'
+import { Spikes } from '../objects/Spikes'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 
@@ -48,20 +49,7 @@ export class GameScene extends Phaser.Scene {
       this
     )
 
-    this.spikes = this.physics.add.group({
-      allowGravity: false,
-      immovable: true,
-    })
-    const spikeObjects = map.getObjectLayer('Danger')['objects']
-    spikeObjects.forEach((spikeObject) => {
-      // Add new spikes to our sprite group, change the start y position to meet the platform
-      const spike = this.spikes!.create(
-        spikeObject.x,
-        spikeObject!.y! - spikeObject!.height!,
-        'spike'
-      ).setOrigin(0, 0)
-      spike.body.setSize(spike.width, spike.height - 12).setOffset(0, 12)
-    })
+    this.spikes = new Spikes(this.physics.world, this, map)
     this.physics.add.collider(
       this.player,
       this.spikes,
