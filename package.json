@@ -11,6 +11,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "phaser": "^3.24.1",
+    "phaser-animated-tiles": "github:anton-g/phaser-animated-tiles",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",

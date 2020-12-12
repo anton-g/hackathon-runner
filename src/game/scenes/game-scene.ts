@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import AnimatedTiles from 'phaser-animated-tiles'
 import { Bouncers } from '../objects/Bouncers'
 import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
@@ -15,6 +16,7 @@ export class GameScene extends Phaser.Scene {
   private goals!: Goals
   private bouncers!: Bouncers
   private scoreText!: Phaser.GameObjects.Text
+  private animatedTiles: any
 
   constructor() {
     super({
@@ -23,6 +25,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.load.scenePlugin(
+      'AnimatedTiles',
+      AnimatedTiles,
+      'animatedTiles',
+      'animatedTiles'
+    )
     this.load.image('tiles', '/images/extruded-tileset.png')
     this.load.atlas('player', '/images/player.png', playerAtlasJson)
     this.load.atlas('bouncer', '/images/bouncer.png', bouncerAtlasJson)
@@ -36,12 +44,16 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     const map = this.make.tilemap({ key: 'map' })
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
-    map.createStaticLayer('Cosmetics', tileset)
+    map.createDynamicLayer('Cosmetics', tileset)
+    const platforms = map.createDynamicLayer('Platforms', tileset)
+    platforms.setCollisionByExclusion([-1], true)
+
+    this.animatedTiles.init(map)
+
+    console.log(this.animatedTiles)
 
     this.player = new Player(this, 'player')
 
-    const platforms = map.createStaticLayer('Platforms', tileset)
-    platforms.setCollisionByExclusion([-1], true)
     this.physics.add.collider(this.player, platforms)
 
     this.cameras.main.setBounds(0, 0, platforms.width, platforms.height)
@@ -122,5 +134,6 @@ export class GameScene extends Phaser.Scene {
 
   update(): void {
     this.player?.update()
+    this.animatedTiles.updateAnimatedTiles()
   }
 }
