@@ -51,6 +51,8 @@ export class GameScene extends Phaser.Scene {
 
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
     map.createDynamicLayer('Cosmetics', tileset)
+    const c2 = map.createDynamicLayer('Cosmetics2', tileset)
+    c2.setAlpha(0.3)
     const platforms = map.createDynamicLayer('Platforms', tileset)
     platforms.setCollisionByExclusion([-1], true)
 
