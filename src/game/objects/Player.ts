@@ -6,6 +6,7 @@ const initialPlayerPosition = {
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined
   private enableInput: boolean = true
+  private swimming: boolean = false
   body!: Phaser.Physics.Arcade.Body
 
   constructor(scene: Phaser.Scene, texture: string) {
@@ -28,6 +29,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(): void {
+    if (this.swimming && this.body.velocity.y > 40) {
+      this.setVelocityY(40)
+    }
+
     this.handleInput()
   }
 
@@ -52,6 +57,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   bounce() {
     this.setVelocityY(-500)
+  }
+
+  setSwimming(swimming: boolean) {
+    this.swimming = swimming
   }
 
   private handleInput(): void {
@@ -79,11 +88,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Player can jump while walking any direction by pressing the space bar
     // or the 'UP' arrow
-    if (
-      this.cursors!.space!.isDown ||
-      (this.cursors!.up!.isDown && this.body.onFloor())
-    ) {
-      this.setVelocityY(-350)
+    if (this.cursors!.up!.isDown && (this.body.onFloor() || this.swimming)) {
+      this.setVelocityY(this.swimming ? -90 : -350)
       if (this.cursors!.right!.isDown || this.cursors!.left!.isDown) {
         this.play('jump_direction', true)
       } else {

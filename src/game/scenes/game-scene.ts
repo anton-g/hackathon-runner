@@ -5,6 +5,7 @@ import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
 import { Spikes } from '../objects/Spikes'
+import { Water } from '../objects/Water'
 import { Wind } from '../objects/Wind'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
@@ -17,6 +18,7 @@ export class GameScene extends Phaser.Scene {
   private goals!: Goals
   private bouncers!: Bouncers
   private wind!: Wind
+  private water!: Water
   private scoreText!: Phaser.GameObjects.Text
   private animatedTiles: any
 
@@ -85,6 +87,9 @@ export class GameScene extends Phaser.Scene {
       this.wind.apply(this.player)
     )
 
+    this.water = new Water(this.physics.world, this, map, this.player)
+    this.physics.add.overlap(this.player, this.water)
+
     this.scoreText = this.add.text(20, 30, `Coins: 0`, {
       fontSize: '14px',
       fill: 'black',
@@ -138,7 +143,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(): void {
-    this.player?.update()
+    this.player.update()
+    this.water.update()
     this.animatedTiles.updateAnimatedTiles()
   }
 }
