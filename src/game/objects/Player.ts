@@ -29,8 +29,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(): void {
-    if (this.swimming && this.body.velocity.y > 40) {
-      this.setVelocityY(40)
+    if (this.swimming && this.body.velocity.y > 45) {
+      this.setVelocityY(45)
     }
 
     this.handleInput()

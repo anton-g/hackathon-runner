@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import AnimatedTiles from 'phaser-animated-tiles'
+import WebFontFile from '../helpers/WebFontFile'
 import { Bouncers } from '../objects/Bouncers'
 import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
@@ -12,6 +13,7 @@ const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
 
 export class GameScene extends Phaser.Scene {
+  private state: 'Start' | 'Playing' | 'Dead' | 'Won' = 'Start'
   private player!: Player
   private spikes!: Phaser.Physics.Arcade.Group
   private coins!: Coins
@@ -20,6 +22,9 @@ export class GameScene extends Phaser.Scene {
   private wind!: Wind
   private water!: Water
   private scoreText!: Phaser.GameObjects.Text
+  private timeText!: Phaser.GameObjects.Text
+  private instructionText!: Phaser.GameObjects.Text
+  private timer!: Phaser.Time.TimerEvent
   private animatedTiles: any
 
   constructor() {
@@ -43,6 +48,7 @@ export class GameScene extends Phaser.Scene {
     this.load.image('heart', '/images/heart.png')
     this.load.image('coin', '/images/coin.png')
     this.load.tilemapTiledJSON('map', level)
+    this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'))
   }
 
   create(): void {
@@ -73,6 +79,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.spikes, () => {
       this.player.handleHit()
       this.coins.reset()
+      this.timer.paused = true
     })
 
     this.goals = new Goals(this.physics.world, this, map)
@@ -92,13 +99,39 @@ export class GameScene extends Phaser.Scene {
     this.water = new Water(this.physics.world, this, map, this.player)
     this.physics.add.overlap(this.player, this.water)
 
+    this.setupUI()
+    this.setupAnimations()
+  }
+
+  setupUI(): void {
     this.scoreText = this.add.text(20, 30, `Coins: 0`, {
       fontSize: '14px',
       fill: 'black',
     })
     this.scoreText.setScrollFactor(0)
 
-    this.setupAnimations()
+    const screenCenterX =
+      this.cameras.main.worldView.x + this.cameras.main.width / 2
+    this.timeText = this.add
+      .text(screenCenterX, 30, `00:00:00`, {
+        fontSize: '20px',
+        fontFamily: '"Press Start 2P"',
+        fill: 'black',
+      })
+      .setOrigin(0.5, 0)
+    this.timeText.setScrollFactor(0)
+    this.timer = this.time.addEvent({
+      loop: true,
+    })
+
+    this.instructionText = this.add
+      .text(screenCenterX, 10, 'Press any key to start', {
+        fontSize: '12px',
+        fontFamily: '"Press Start 2P"',
+        fill: 'black',
+      })
+      .setOrigin(0.5, 0)
+    this.instructionText.setScrollFactor(0)
   }
 
   setupAnimations(): void {
@@ -148,5 +181,19 @@ export class GameScene extends Phaser.Scene {
     this.player.update()
     this.water.update()
     this.animatedTiles.updateAnimatedTiles()
+    this.timeText.setText(msToTime(this.timer.getElapsed()))
   }
+}
+
+function msToTime(duration: number) {
+  let milliseconds = duration % 1000
+  let seconds = Math.floor((duration / 1000) % 60)
+  let minutes = Math.floor((duration / (1000 * 60)) % 60)
+
+  const f = milliseconds.toFixed(0)
+  const ms = f.length === 1 ? '00' + f : f.length === 2 ? '0' + f : f
+  const mins = minutes < 10 ? '0' + minutes : minutes
+  const secs = seconds < 10 ? '0' + seconds : seconds
+
+  return mins + ':' + secs + '.' + ms
 }
