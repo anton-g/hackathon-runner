@@ -14,7 +14,7 @@ export class Goals extends Phaser.Physics.Arcade.Group {
   }
 
   private addGoal(x: number, y: number): void {
-    const goal = this.create(x, y, 'heart')
+    const goal = this.create(x, y, 'heart').setOrigin(0, 1)
     goal.body.setSize(goal.width, goal.height)
 
     this.scene.tweens.add({

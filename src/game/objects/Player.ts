@@ -8,6 +8,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private enableInput: boolean = true
   private swimming: boolean = false
   body!: Phaser.Physics.Arcade.Body
+  keys: number = 0
 
   constructor(scene: Phaser.Scene, texture: string) {
     super(scene, initialPlayerPosition.x, initialPlayerPosition.y, texture)
@@ -62,6 +63,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   setEnableInput(enabled: boolean) {
     this.enableInput = enabled
+  }
+
+  hasKey() {
+    return this.keys > 0
   }
 
   private reset(): void {

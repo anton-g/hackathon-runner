@@ -8,6 +8,8 @@ import { Player } from '../objects/Player'
 import { Dangers } from '../objects/Dangers'
 import { Water } from '../objects/Water'
 import { Wind } from '../objects/Wind'
+import { Keys } from '../objects/Keys'
+import { Doors } from '../objects/Doors'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -17,6 +19,8 @@ export class GameScene extends Phaser.Scene {
   private player!: Player
   private dangers!: Phaser.Physics.Arcade.Group
   private coins!: Coins
+  private keys!: Keys
+  private doors!: Doors
   private goals!: Goals
   private bouncers!: Bouncers
   private wind!: Wind
@@ -46,8 +50,9 @@ export class GameScene extends Phaser.Scene {
     this.load.image('spike', '/images/spike.png')
     this.load.image('stalactite', '/images/stalactite.png')
     this.load.image('coin', '/images/coin.png')
+    this.load.image('key', '/images/key.png')
+    this.load.image('door', '/images/door.png')
     this.load.image('heart', '/images/heart.png')
-    this.load.image('coin', '/images/coin.png')
     this.load.tilemapTiledJSON('map', level)
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'))
   }
@@ -75,6 +80,15 @@ export class GameScene extends Phaser.Scene {
       this.scoreText.setText(`Coins: ${score}`)
     }
     this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
+
+    this.keys = new Keys(this.physics.world, this, map)
+    this.keys.onKeyUpdate = (count) => {
+      this.player.keys = count
+    }
+    this.physics.add.overlap(this.player, this.keys, this.keys.handleHit)
+
+    this.doors = new Doors(this.physics.world, this, map)
+    this.physics.add.collider(this.player, this.doors, this.doors.handleHit)
 
     this.dangers = new Dangers(this.physics.world, this, map)
     this.physics.add.collider(
@@ -196,6 +210,7 @@ export class GameScene extends Phaser.Scene {
   handleFail() {
     this.timer.paused = true
     this.coins.reset()
+    this.keys.reset()
     this.player.setEnableInput(false)
     this.player.handleHit()
     this.instructionText.setText('You lost :(')
