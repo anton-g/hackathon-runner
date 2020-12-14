@@ -5,7 +5,7 @@ import { Bouncers } from '../objects/Bouncers'
 import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
-import { Dangers } from '../objects/Spikes'
+import { Dangers } from '../objects/Dangers'
 import { Water } from '../objects/Water'
 import { Wind } from '../objects/Wind'
 const level = require('../assets/tilemaps/level1.json')
@@ -15,7 +15,7 @@ const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
 export class GameScene extends Phaser.Scene {
   private state: 'Start' | 'Playing' | 'Dead' | 'Won' = 'Start'
   private player!: Player
-  private spikes!: Phaser.Physics.Arcade.Group
+  private dangers!: Phaser.Physics.Arcade.Group
   private coins!: Coins
   private goals!: Goals
   private bouncers!: Bouncers
@@ -44,6 +44,7 @@ export class GameScene extends Phaser.Scene {
     this.load.atlas('player', '/images/player.png', playerAtlasJson)
     this.load.atlas('bouncer', '/images/bouncer.png', bouncerAtlasJson)
     this.load.image('spike', '/images/spike.png')
+    this.load.image('stalactite', '/images/stalactite.png')
     this.load.image('coin', '/images/coin.png')
     this.load.image('heart', '/images/heart.png')
     this.load.image('coin', '/images/coin.png')
@@ -75,10 +76,10 @@ export class GameScene extends Phaser.Scene {
     }
     this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
 
-    this.spikes = new Dangers(this.physics.world, this, map)
+    this.dangers = new Dangers(this.physics.world, this, map)
     this.physics.add.collider(
       this.player,
-      this.spikes,
+      this.dangers,
       this.handleFail.bind(this)
     )
 

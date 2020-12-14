@@ -41,7 +41,7 @@ export class Coins extends Phaser.Physics.Arcade.Group {
   }
 
   private addCoin(x: number, y: number): void {
-    const coin = this.create(x, y, 'coin')
+    const coin = this.create(x, y, 'coin').setOrigin(0, 1)
     coin.body.setSize(coin.width - 4, coin.height - 4)
 
     this.scene.tweens.add({
