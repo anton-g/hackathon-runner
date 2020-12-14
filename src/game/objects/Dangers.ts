@@ -12,7 +12,6 @@ export class Dangers extends Phaser.Physics.Arcade.Group {
     const dangers = map.getObjectLayer('Danger')['objects']
     dangers.forEach((dangerObj) => {
       const type = dangerObj.properties.find((x: any) => x.name === 'type')
-      console.log(type)
       switch (type.value) {
         case 'spike':
           this.addSpike(dangerObj.x!, dangerObj.y! - dangerObj!.height!)
