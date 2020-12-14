@@ -5,7 +5,7 @@ import { Bouncers } from '../objects/Bouncers'
 import { Coins } from '../objects/Coins'
 import { Goals } from '../objects/Goals'
 import { Player } from '../objects/Player'
-import { Spikes } from '../objects/Spikes'
+import { Dangers } from '../objects/Spikes'
 import { Water } from '../objects/Water'
 import { Wind } from '../objects/Wind'
 const level = require('../assets/tilemaps/level1.json')
@@ -75,15 +75,15 @@ export class GameScene extends Phaser.Scene {
     }
     this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
 
-    this.spikes = new Spikes(this.physics.world, this, map)
-    this.physics.add.collider(this.player, this.spikes, () => {
-      this.player.handleHit()
-      this.coins.reset()
-      this.timer.paused = true
-    })
+    this.spikes = new Dangers(this.physics.world, this, map)
+    this.physics.add.collider(
+      this.player,
+      this.spikes,
+      this.handleFail.bind(this)
+    )
 
     this.goals = new Goals(this.physics.world, this, map)
-    this.physics.add.overlap(this.player, this.goals, () => console.log('win'))
+    this.physics.add.overlap(this.player, this.goals, this.handleWin.bind(this))
 
     this.bouncers = new Bouncers(this.physics.world, this, map)
     this.physics.add.overlap(this.player, this.bouncers, (obj1, obj2) => {
@@ -99,6 +99,9 @@ export class GameScene extends Phaser.Scene {
     this.water = new Water(this.physics.world, this, map, this.player)
     this.physics.add.overlap(this.player, this.water)
 
+    this.input.keyboard.on('keydown', () => {
+      if (this.state !== 'Playing') this.handleStart()
+    })
     this.setupUI()
     this.setupAnimations()
   }
@@ -122,6 +125,7 @@ export class GameScene extends Phaser.Scene {
     this.timeText.setScrollFactor(0)
     this.timer = this.time.addEvent({
       loop: true,
+      paused: true,
     })
 
     this.instructionText = this.add
@@ -175,6 +179,37 @@ export class GameScene extends Phaser.Scene {
       ],
       frameRate: 30,
     })
+  }
+
+  handleStart() {
+    this.player.setEnableInput(true)
+    this.instructionText.setText('')
+    this.timer.reset({
+      loop: true,
+    })
+    setTimeout(() => {
+      this.state = 'Playing'
+    }, 250)
+  }
+
+  handleFail() {
+    this.timer.paused = true
+    this.coins.reset()
+    this.player.setEnableInput(false)
+    this.player.handleHit()
+    this.instructionText.setText('You lost :(')
+    setTimeout(() => {
+      this.state = 'Dead'
+    }, 250)
+  }
+
+  handleWin() {
+    this.timer.paused = true
+    this.state = 'Won'
+    this.instructionText.setText('You won!')
+    this.coins.reset()
+    this.player.setEnableInput(false)
+    this.player.handleWin()
   }
 
   update(): void {

@@ -37,22 +37,19 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   handleHit(): void {
-    this.setVelocity(0, 0)
-    this.setX(initialPlayerPosition.x)
-    this.setY(initialPlayerPosition.y)
-    this.play('idle', true)
+    this.reset()
     this.setAlpha(0)
-    this.enableInput = false
     this.scene.tweens.add({
       targets: this,
       alpha: 1,
       duration: 100,
       ease: 'Linear',
       repeat: 5,
-      onComplete: () => {
-        this.enableInput = true
-      },
     })
+  }
+
+  handleWin(): void {
+    this.reset()
   }
 
   bounce() {
@@ -61,6 +58,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   setSwimming(swimming: boolean) {
     this.swimming = swimming
+  }
+
+  setEnableInput(enabled: boolean) {
+    this.enableInput = enabled
+  }
+
+  private reset(): void {
+    this.setVelocity(0, 0)
+    this.setX(initialPlayerPosition.x)
+    this.setY(initialPlayerPosition.y)
+    this.play('idle', true)
   }
 
   private handleInput(): void {

@@ -1,4 +1,4 @@
-export class Spikes extends Phaser.Physics.Arcade.Group {
+export class Dangers extends Phaser.Physics.Arcade.Group {
   constructor(
     world: Phaser.Physics.Arcade.World,
     scene: Phaser.Scene,
@@ -9,10 +9,11 @@ export class Spikes extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    const spikes = map.getObjectLayer('Danger')['objects']
-    spikes.forEach((spikeObj) =>
+    const dangers = map.getObjectLayer('Danger')['objects']
+    dangers.forEach((spikeObj) => {
+      console.log(spikeObj)
       this.addSpike(spikeObj.x!, spikeObj.y! - spikeObj!.height!)
-    )
+    })
   }
 
   private addSpike(x: number, y: number): void {
