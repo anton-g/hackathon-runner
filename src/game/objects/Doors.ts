@@ -29,12 +29,15 @@ export class Doors extends Phaser.Physics.Arcade.Group {
   }
 
   handleHit(
-    obj1: Phaser.Types.Physics.Arcade.GameObjectWithBody,
-    obj2: Phaser.Types.Physics.Arcade.GameObjectWithBody
+    obj1: Phaser.Types.Physics.Arcade.GameObjectWithDynamicBody,
+    obj2: Phaser.Types.Physics.Arcade.GameObjectWithDynamicBody
   ): void {
     const player = obj1 as Player
     if (player.hasKey()) {
-      obj2.destroy()
+      const door = obj2 as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+      door.body.enable = false
+      door.setAlpha(0.3)
+      door.play('door_closed')
     }
   }
 

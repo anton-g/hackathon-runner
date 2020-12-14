@@ -13,6 +13,7 @@ import { Doors } from '../objects/Doors'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
+const doorAtlasJson = require('../assets/images/door_atlas.json')
 
 export class GameScene extends Phaser.Scene {
   private state: 'Start' | 'Playing' | 'Dead' | 'Won' = 'Start'
@@ -47,11 +48,11 @@ export class GameScene extends Phaser.Scene {
     this.load.image('tiles', '/images/extruded-tileset.png')
     this.load.atlas('player', '/images/player.png', playerAtlasJson)
     this.load.atlas('bouncer', '/images/bouncer.png', bouncerAtlasJson)
+    this.load.atlas('door', '/images/door.png', doorAtlasJson)
     this.load.image('spike', '/images/spike.png')
     this.load.image('stalactite', '/images/stalactite.png')
     this.load.image('coin', '/images/coin.png')
     this.load.image('key', '/images/key.png')
-    this.load.image('door', '/images/door.png')
     this.load.image('heart', '/images/heart.png')
     this.load.tilemapTiledJSON('map', level)
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'))
@@ -193,6 +194,12 @@ export class GameScene extends Phaser.Scene {
         { key: 'bouncer', frame: 'down' },
       ],
       frameRate: 30,
+    })
+
+    this.anims.create({
+      key: 'door_closed',
+      frames: [{ key: 'door', frame: 'door_open' }],
+      frameRate: 10,
     })
   }
 
