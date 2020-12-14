@@ -117,7 +117,7 @@ const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 16px;
+  padding-top: 36px;
   padding-bottom: 16px;
 `
 

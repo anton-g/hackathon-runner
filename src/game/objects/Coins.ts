@@ -57,5 +57,10 @@ export class Coins extends Phaser.Physics.Arcade.Group {
   private setScore(score: number) {
     this.score = score
     this.onScoreUpdate?.(this.score)
+
+    if (score === 0) return
+
+    const x = 74 + 12 * (score - 1)
+    this.create(x, 29, 'black-gem').setOrigin(0, 1).setScrollFactor(0)
   }
 }

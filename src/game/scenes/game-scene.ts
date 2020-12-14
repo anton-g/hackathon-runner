@@ -52,6 +52,7 @@ export class GameScene extends Phaser.Scene {
     this.load.image('spike', '/images/spike.png')
     this.load.image('stalactite', '/images/stalactite.png')
     this.load.image('coin', '/images/coin.png')
+    this.load.image('black-gem', '/images/black-gem.png')
     this.load.image('key', '/images/key.png')
     this.load.image('heart', '/images/heart.png')
     this.load.tilemapTiledJSON('map', level)
@@ -78,7 +79,7 @@ export class GameScene extends Phaser.Scene {
 
     this.coins = new Coins(this.physics.world, this, map)
     this.coins.onScoreUpdate = (score) => {
-      this.scoreText.setText(`Coins: ${score}`)
+      // this.scoreText.setText(`Coins: ${score}`)
     }
     this.physics.add.overlap(this.player, this.coins, this.coins.handleHit)
 
@@ -123,9 +124,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   setupUI(): void {
-    this.scoreText = this.add.text(20, 30, `Coins: 0`, {
-      fontSize: '14px',
+    this.scoreText = this.add.text(24, 16, `Gems:`, {
+      fontSize: '10px',
       fill: 'black',
+      fontFamily: '"Press Start 2P"',
     })
     this.scoreText.setScrollFactor(0)
 
