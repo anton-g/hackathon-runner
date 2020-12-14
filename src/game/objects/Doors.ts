@@ -39,6 +39,6 @@ export class Doors extends Phaser.Physics.Arcade.Group {
   }
 
   private addDoor(x: number, y: number): void {
-    const door = this.create(x, y, 'door').setOrigin(0, 1)
+    this.create(x, y, 'door').setOrigin(0, 1)
   }
 }

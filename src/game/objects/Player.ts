@@ -1,5 +1,5 @@
 const initialPlayerPosition = {
-  x: 55,
+  x: 16 * 8 - 8,
   y: 380,
 }
 
