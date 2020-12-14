@@ -218,6 +218,7 @@ export class GameScene extends Phaser.Scene {
     this.timer.paused = true
     this.coins.reset()
     this.keys.reset()
+    this.doors.reset()
     this.player.setEnableInput(false)
     this.player.handleHit()
     this.instructionText.setText('You lost :(')

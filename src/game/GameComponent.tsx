@@ -8,7 +8,7 @@ function GameComponent() {
     if (!gameRef.current) gameRef.current = new Game()
   }, [])
 
-  return <div className="game-anchor"></div>
+  return <div id="game-anchor"></div>
 }
 
 export default GameComponent

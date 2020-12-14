@@ -36,7 +36,6 @@ export class Doors extends Phaser.Physics.Arcade.Group {
     if (player.hasKey()) {
       const door = obj2 as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
       door.body.enable = false
-      door.setAlpha(0.3)
       door.play('door_closed')
     }
   }
