@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { Section } from './common'
 
 import GameComponent from './game/GameComponent'
+import { Toplists } from './Toplists'
 
 function App() {
   return (
@@ -17,11 +19,11 @@ function App() {
       </GameWrapper>
       <Sections>
         <Section>
-          <SectionTitle>INSTRUCTIONS</SectionTitle>
-          <SectionText style={{ maxWidth: 350 }}>
+          <h2>INSTRUCTIONS</h2>
+          <p style={{ maxWidth: 350 }}>
             Get to the goal as fast as possible. Collect 1-5 gems for a tougher
             challenge.
-          </SectionText>
+          </p>
           <Controls>
             <p>CONTROLS:</p>
             <Keys>
@@ -68,82 +70,30 @@ function App() {
           </Controls>
         </Section>
         <Section>
-          <SectionTitle>ABOUT</SectionTitle>
-          <SectionText>
+          <h2>ABOUT</h2>
+          <p>
             HACKATHON RUNNER is a small platform game built with the game engine
             Phaser. It was created for DigitalOceans App Platform Hackathon on
             DEV (
-            <Link href="https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k">
+            <a href="https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k">
               link
-            </Link>
+            </a>
             ).
-          </SectionText>
-          <SectionText>
+          </p>
+          <p>
             The most technically exciting feature is probably the "ghosts" that
             you see when playing. They are real time representations of every
             other player that is active right now.
-          </SectionText>
-          <SectionText>
+          </p>
+          <p>
             The entire thing is also open source (
-            <Link href="https://github.com/anton-g/hackathon-runner">link</Link>
-            ) and some of the progress building this is documented on DEV (
-            <Link href="https://dev.to">link</Link>).
-          </SectionText>
+            <a href="https://github.com/anton-g/hackathon-runner">link</a>) and
+            some of the progress building this is documented on DEV (
+            <a href="https://dev.to">link</a>).
+          </p>
         </Section>
+        <Toplists></Toplists>
       </Sections>
-      <Section>
-        <SectionTitle>TOP LISTS</SectionTitle>
-        <TopLists>
-          <TopList>
-            <span>5 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>4 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>3 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>2 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>1 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>No gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-        </TopLists>
-      </Section>
     </Wrapper>
   )
 }
@@ -167,14 +117,6 @@ const Sections = styled.div`
   gap: 16px;
 `
 
-const Section = styled.section`
-  background-color: black;
-  padding: 24px;
-  width: max-content;
-  color: white;
-  margin-bottom: 16px;
-`
-
 const Header = styled.header`
   background-color: black;
   padding: 24px;
@@ -190,21 +132,6 @@ const HeaderTitle = styled.h1`
   margin: 0;
   margin-bottom: 4px;
   font-size: 24px;
-`
-
-const SectionTitle = styled.h2`
-  color: white;
-  display: inline-block;
-`
-
-const SectionText = styled.p`
-  max-width: 550px;
-  font-size: 12px;
-  line-height: 1.4;
-`
-
-const Link = styled.a`
-  color: white;
 `
 
 const HeaderSubtitle = styled.span`
@@ -271,25 +198,6 @@ const Keys = styled.div`
   height: min-content;
   align-items: center;
   justify-items: center;
-`
-
-const TopLists = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  max-width: 600px;
-  justify-content: space-evenly;
-`
-
-const TopList = styled.div`
-  > ol {
-    margin-bottom: 24px;
-
-    > li {
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-  }
 `
 
 export default App

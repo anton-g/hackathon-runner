@@ -11,6 +11,7 @@ import { Wind } from '../objects/Wind'
 import { Keys } from '../objects/Keys'
 import { Doors } from '../objects/Doors'
 import { SpecialPlatforms } from '../objects/SpecialPlatforms'
+import { msToTime } from '../../utils'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -45,7 +46,7 @@ export class GameScene extends Phaser.Scene {
       'AnimatedTiles',
       AnimatedTiles,
       'animatedTiles',
-      'animatedTiles'
+      'animatedTiles',
     )
     this.load.image('tiles', '/images/extruded-tileset.png')
     this.load.atlas('player', '/images/player.png', playerAtlasJson)
@@ -101,7 +102,7 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(
       this.player,
       this.dangers,
-      this.handleFail.bind(this)
+      this.handleFail.bind(this),
     )
 
     this.goals = new Goals(this.physics.world, this, map)
@@ -115,7 +116,7 @@ export class GameScene extends Phaser.Scene {
 
     this.wind = new Wind(this.physics.world, this, map)
     this.physics.add.overlap(this.player, this.wind, () =>
-      this.wind.apply(this.player)
+      this.wind.apply(this.player),
     )
 
     this.water = new Water(this.physics.world, this, map, this.player)
@@ -276,17 +277,4 @@ export class GameScene extends Phaser.Scene {
     this.animatedTiles.updateAnimatedTiles()
     this.timeText.setText(msToTime(this.timer.getElapsed()))
   }
-}
-
-function msToTime(duration: number) {
-  let milliseconds = duration % 1000
-  let seconds = Math.floor((duration / 1000) % 60)
-  let minutes = Math.floor((duration / (1000 * 60)) % 60)
-
-  const f = milliseconds.toFixed(0)
-  const ms = f.length === 1 ? '00' + f : f.length === 2 ? '0' + f : f
-  const mins = minutes < 10 ? '0' + minutes : minutes
-  const secs = seconds < 10 ? '0' + seconds : seconds
-
-  return mins + ':' + secs + '.' + ms
 }
