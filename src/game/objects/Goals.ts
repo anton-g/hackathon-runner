@@ -9,7 +9,7 @@ export class Goals extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    const goals = map.getObjectLayer('Goal')['objects']
+    const goals = map.getObjectLayer('Goal').objects
     goals.forEach((goalObj) => this.addGoal(goalObj.x!, goalObj.y!))
   }
 

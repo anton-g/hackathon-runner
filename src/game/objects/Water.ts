@@ -17,7 +17,7 @@ export class Water extends Phaser.Physics.Arcade.Group {
 
     this.player = player
 
-    const water = map.getObjectLayer('Water')['objects']
+    const water = map.getObjectLayer('Water').objects
     water.forEach((waterObj) => this.addWater(waterObj.x!, waterObj.y! - 16))
   }
 

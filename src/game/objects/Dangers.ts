@@ -9,7 +9,7 @@ export class Dangers extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    const dangers = map.getObjectLayer('Danger')['objects']
+    const dangers = map.getObjectLayer('Danger').objects
     dangers.forEach((dangerObj) => {
       const type = dangerObj.properties.find((x: any) => x.name === 'type')
       switch (type.value) {

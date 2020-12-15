@@ -10,6 +10,7 @@ import { Water } from '../objects/Water'
 import { Wind } from '../objects/Wind'
 import { Keys } from '../objects/Keys'
 import { Doors } from '../objects/Doors'
+import { SpecialPlatforms } from '../objects/SpecialPlatforms'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -26,6 +27,7 @@ export class GameScene extends Phaser.Scene {
   private bouncers!: Bouncers
   private wind!: Wind
   private water!: Water
+  private specialPlatforms!: SpecialPlatforms
   private scoreText!: Phaser.GameObjects.Text
   private timeText!: Phaser.GameObjects.Text
   private instructionText!: Phaser.GameObjects.Text
@@ -91,6 +93,9 @@ export class GameScene extends Phaser.Scene {
 
     this.doors = new Doors(this.physics.world, this, map)
     this.physics.add.collider(this.player, this.doors, this.doors.handleHit)
+
+    this.specialPlatforms = new SpecialPlatforms(this.physics.world, this, map)
+    this.physics.add.collider(this.player, this.specialPlatforms)
 
     this.dangers = new Dangers(this.physics.world, this, map)
     this.physics.add.collider(

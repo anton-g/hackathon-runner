@@ -9,7 +9,7 @@ export class Bouncers extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    const bouncers = map.getObjectLayer('Bouncers')['objects']
+    const bouncers = map.getObjectLayer('Bouncers').objects
     bouncers.forEach((bouncerObj) =>
       this.addBouncer(bouncerObj.x!, bouncerObj.y! - bouncerObj!.height!)
     )

@@ -11,7 +11,7 @@ export class Wind extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    const wind = map.getObjectLayer('UpwardsWind')['objects']
+    const wind = map.getObjectLayer('UpwardsWind').objects
     wind.forEach((windObj) => this.addWind(windObj.x!, windObj.y! - 16))
   }
 

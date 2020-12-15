@@ -13,7 +13,7 @@ export class Coins extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    this.initialCoinObjs = map.getObjectLayer('Coins')['objects']
+    this.initialCoinObjs = map.getObjectLayer('Coins').objects
     this.initialCoinObjs.forEach((coinObj) =>
       this.addCoin(coinObj.x!, coinObj.y!)
     )

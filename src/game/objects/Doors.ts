@@ -13,7 +13,7 @@ export class Doors extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    this.initialDoorObjs = map.getObjectLayer('Doors')['objects']
+    this.initialDoorObjs = map.getObjectLayer('Doors').objects
     this.initialDoorObjs.forEach((doorObj) =>
       this.addDoor(doorObj.x!, doorObj.y!)
     )

@@ -13,7 +13,7 @@ export class Keys extends Phaser.Physics.Arcade.Group {
       immovable: true,
     })
 
-    this.initialKeyObjs = map.getObjectLayer('Keys')['objects']
+    this.initialKeyObjs = map.getObjectLayer('Keys').objects
     this.initialKeyObjs.forEach((keyObj) => this.addKey(keyObj.x!, keyObj.y!))
 
     this.reset = this.reset.bind(this)
