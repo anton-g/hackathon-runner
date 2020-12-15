@@ -239,6 +239,8 @@ export class GameScene extends Phaser.Scene {
     this.state = 'Won'
     this.instructionText.setText('You won!')
     this.coins.reset()
+    this.keys.reset()
+    this.doors.reset()
     this.player.setEnableInput(false)
     this.player.handleWin()
   }

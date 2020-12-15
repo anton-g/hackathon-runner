@@ -48,12 +48,23 @@ function App() {
           <SectionText>
             HACKATHON RUNNER is a small platform game built with the game engine
             Phaser. It was created for DigitalOceans App Platform Hackathon on
-            DEV.
+            DEV (
+            <Link href="https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k">
+              link
+            </Link>
+            ).
           </SectionText>
-          {/* <p style={{ maxWidth: 550, fontSize: 12, lineHeight: 1.4 }}>
-            It also features real time "ghosts" of everyone else that is playing
-            the game at the same time.
-          </p> */}
+          <SectionText>
+            The most technically exciting feature is probably the "ghosts" that
+            you see when playing. They are real time representations of every
+            other player that is active right now.
+          </SectionText>
+          <SectionText>
+            The entire thing is also open source (
+            <Link href="https://github.com/anton-g/hackathon-runner">link</Link>
+            ) and some of the progress building this is documented on DEV (
+            <Link href="https://dev.to">link</Link>).
+          </SectionText>
         </Section>
       </Sections>
       <Section>
@@ -166,6 +177,10 @@ const SectionText = styled.p`
   max-width: 550px;
   font-size: 12px;
   line-height: 1.4;
+`
+
+const Link = styled.a`
+  color: white;
 `
 
 const HeaderSubtitle = styled.span`

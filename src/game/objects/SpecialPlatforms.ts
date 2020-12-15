@@ -23,11 +23,11 @@ export class SpecialPlatforms extends Phaser.Physics.Arcade.StaticGroup {
     const platform = this.create(x, y, 'door').setAlpha(0)
     if (direction === 'up')
       platform.body
-        .setSize(platform.width, platform.height - 14)
-        .setOffset(0, 0)
+        .setSize(platform.width - 2, platform.height - 14)
+        .setOffset(1, 0)
     else
       platform.body
-        .setSize(platform.width - 14, platform.height0)
-        .setOffset(15, 0)
+        .setSize(platform.width - 12, platform.height0)
+        .setOffset(14, 0)
   }
 }
