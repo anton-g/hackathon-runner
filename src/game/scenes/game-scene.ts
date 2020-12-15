@@ -121,8 +121,17 @@ export class GameScene extends Phaser.Scene {
     this.water = new Water(this.physics.world, this, map, this.player)
     this.physics.add.overlap(this.player, this.water)
 
-    this.input.keyboard.on('keydown', () => {
-      if (this.state !== 'Playing') this.handleStart()
+    this.input.keyboard.on('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'r') this.handleReset()
+
+      if (this.state === 'Playing') return
+
+      if (
+        e.key === 'ArrowLeft' ||
+        e.key === 'ArrowRight' ||
+        e.key === 'ArrowUp'
+      )
+        this.handleStart()
     })
     this.setupUI()
     this.setupAnimations()
@@ -152,7 +161,7 @@ export class GameScene extends Phaser.Scene {
     })
 
     this.instructionText = this.add
-      .text(screenCenterX, 10, 'Press any key to start', {
+      .text(screenCenterX, 10, 'Move to start', {
         fontSize: '12px',
         fontFamily: '"Press Start 2P"',
         fill: 'black',
@@ -231,6 +240,22 @@ export class GameScene extends Phaser.Scene {
     this.instructionText.setText('You lost :(')
     setTimeout(() => {
       this.state = 'Dead'
+    }, 250)
+  }
+
+  handleReset() {
+    this.timer.reset({
+      loop: true,
+      paused: true,
+    })
+    this.coins.reset()
+    this.keys.reset()
+    this.doors.reset()
+    this.player.setEnableInput(false)
+    this.player.handleHit()
+    this.instructionText.setText('Move to start')
+    setTimeout(() => {
+      this.state = 'Start'
     }, 250)
   }
 

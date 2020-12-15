@@ -80,7 +80,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     if (!this.enableInput) return
     // Control the player with left or right keys
     if (this.cursors!.left!.isDown) {
-      this!.setVelocityX(-200)
+      this.setVelocityX(-200)
       if (this!.body.onFloor()) {
         this!.play('walk', true)
       }

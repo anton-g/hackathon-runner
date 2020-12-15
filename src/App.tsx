@@ -35,11 +35,35 @@ function App() {
                   <Left></Left>
                 </span>
               </Key>
-              <Key style={{ gridColumnStart: 3 }}>
+              <Key style={{ gridColumnStart: 4 }}>
                 <span>
                   <Right></Right>
                 </span>
               </Key>
+              <Key style={{ gridColumnStart: 6 }}>
+                <span>R</span>
+              </Key>
+              <p
+                style={{
+                  gridColumnStart: 1,
+                  gridColumnEnd: 5,
+                  textAlign: 'center',
+                  margin: 0,
+                  width: '100%',
+                }}
+              >
+                Move
+              </p>
+              <p
+                style={{
+                  gridColumnStart: 6,
+                  textAlign: 'center',
+                  margin: 0,
+                  width: '100%',
+                }}
+              >
+                Restart
+              </p>
             </Keys>
           </Controls>
         </Section>
@@ -240,11 +264,13 @@ const Key = styled.div`
 
 const Keys = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 4px;
   width: min-content;
   height: min-content;
+  align-items: center;
+  justify-items: center;
 `
 
 const TopLists = styled.div`
