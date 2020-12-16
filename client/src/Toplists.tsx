@@ -32,7 +32,8 @@ export function Toplists() {
           <ol>
             {toplists?.five.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>
@@ -42,7 +43,8 @@ export function Toplists() {
           <ol>
             {toplists?.four.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>
@@ -52,7 +54,8 @@ export function Toplists() {
           <ol>
             {toplists?.three.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>
@@ -62,7 +65,8 @@ export function Toplists() {
           <ol>
             {toplists?.two.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>
@@ -72,7 +76,8 @@ export function Toplists() {
           <ol>
             {toplists?.one.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>
@@ -82,7 +87,8 @@ export function Toplists() {
           <ol>
             {toplists?.zero.map((x, idx) => (
               <li key={idx}>
-                <PlayerName>{x.name}</PlayerName> - {msToTime(x.time)}
+                <PlayerName>{x.name}</PlayerName> <span>-</span>{' '}
+                {msToTime(x.time)}
               </li>
             ))}
           </ol>

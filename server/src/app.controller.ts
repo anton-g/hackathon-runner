@@ -6,38 +6,14 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('toplists')
-  getToplists(): any {
+  async getToplists(): Promise<any> {
     return {
-      zero: [
-        { name: 'Foo Foo Foo Foo Foo', time: 200000 },
-        { name: 'Foo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
-      one: [
-        { name: 'Foo', time: 200000 },
-        { name: 'FooFooFooFooFooFooFooFooFooFoo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
-      two: [
-        { name: 'Foo', time: 200000 },
-        { name: 'Foo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
-      three: [
-        { name: 'Foo', time: 200000 },
-        { name: 'Foo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
-      four: [
-        { name: 'Foo', time: 200000 },
-        { name: 'Foo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
-      five: [
-        { name: 'Foo', time: 200000 },
-        { name: 'Foo', time: 200003 },
-        { name: 'Foo', time: 200500 },
-      ],
+      zero: await this.appService.getAll(0),
+      one: await this.appService.getAll(1),
+      two: await this.appService.getAll(2),
+      three: await this.appService.getAll(3),
+      four: await this.appService.getAll(4),
+      five: await this.appService.getAll(5),
     }
   }
 }

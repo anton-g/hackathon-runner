@@ -20,7 +20,18 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 export class Game extends Phaser.Game {
-  constructor() {
+  onScore: (score: { time: number; gems: number }) => void
+  enabled: boolean
+
+  constructor({
+    onScore,
+    enabled,
+  }: {
+    onScore: (score: { time: number; gems: number }) => void
+    enabled: boolean
+  }) {
     super(config)
+    this.onScore = onScore
+    this.enabled = enabled
   }
 }

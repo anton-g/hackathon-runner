@@ -12,6 +12,7 @@ import { Keys } from '../objects/Keys'
 import { Doors } from '../objects/Doors'
 import { SpecialPlatforms } from '../objects/SpecialPlatforms'
 import { msToTime } from '../../utils'
+import { Game } from '../game'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -123,6 +124,8 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.water)
 
     this.input.keyboard.on('keydown', (e: KeyboardEvent) => {
+      if (!(this.game as Game).enabled) return
+
       if (e.key === 'r') this.handleReset()
 
       if (this.state === 'Playing') return
@@ -261,6 +264,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   handleWin() {
+    ;(this.game as Game).onScore({
+      gems: this.coins.score,
+      time: this.timer.elapsed,
+    })
     this.timer.paused = true
     this.state = 'Won'
     this.instructionText.setText('You won!')
@@ -272,7 +279,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(): void {
-    this.player.update()
+    if ((this.game as Game).enabled) {
+      this.player.update()
+    }
     this.water.update()
     this.animatedTiles.updateAnimatedTiles()
     this.timeText.setText(msToTime(this.timer.getElapsed()))

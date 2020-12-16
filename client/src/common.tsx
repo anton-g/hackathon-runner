@@ -6,6 +6,7 @@ export const Section = styled.section`
   width: max-content;
   color: white;
   margin-bottom: 16px;
+  z-index: 2;
 
   > h2 {
     color: white;
