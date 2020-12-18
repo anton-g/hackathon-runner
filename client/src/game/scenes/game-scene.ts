@@ -13,6 +13,7 @@ import { Doors } from '../objects/Doors'
 import { SpecialPlatforms } from '../objects/SpecialPlatforms'
 import { msToTime } from '../../utils'
 import { Game } from '../game'
+import { OtherPlayer } from '../objects/OtherPlayer'
 const level = require('../assets/tilemaps/level1.json')
 const playerAtlasJson = require('../assets/images/player_atlas.json')
 const bouncerAtlasJson = require('../assets/images/bouncer_atlas.json')
@@ -20,6 +21,7 @@ const doorAtlasJson = require('../assets/images/door_atlas.json')
 
 export class GameScene extends Phaser.Scene {
   private state: 'Start' | 'Playing' | 'Dead' | 'Won' = 'Start'
+  private otherPlayer!: OtherPlayer
   private player!: Player
   private dangers!: Phaser.Physics.Arcade.Group
   private coins!: Coins
@@ -65,7 +67,11 @@ export class GameScene extends Phaser.Scene {
 
   create(): void {
     const map = this.make.tilemap({ key: 'map' })
-    this.player = new Player(this, 'player')
+    this.player = new Player(this, 'player', (update) =>
+      (this.game as Game).socket.volatile.emit('input', update),
+    )
+
+    this.otherPlayer = new OtherPlayer(this, 'player', 35, 300)
 
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
     map.createDynamicLayer('Cosmetics', tileset)
@@ -285,5 +291,14 @@ export class GameScene extends Phaser.Scene {
     this.water.update()
     this.animatedTiles.updateAnimatedTiles()
     this.timeText.setText(msToTime(this.timer.getElapsed()))
+
+    const snapshot = (this.game as Game).SI.calcInterpolation('x y')
+    if (snapshot?.state) {
+      snapshot.state.forEach((s) => {
+        if (s.id === (this.game as Game).socket.id) return
+
+        this.otherPlayer.update(s.x as number, s.y as number)
+      })
+    }
   }
 }

@@ -21,7 +21,10 @@ export function About() {
         The entire thing is also open source (
         <a href="https://github.com/anton-g/hackathon-runner">link</a>) and some
         of the progress building this is documented on DEV (
-        <a href="https://dev.to">link</a>).
+        <a href="https://dev.to/awnton/do-hackathon-runner-devlog-1-28pd">
+          link
+        </a>
+        ).
       </p>
     </Section>
   )

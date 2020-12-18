@@ -9,9 +9,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private swimming: boolean = false
   body!: Phaser.Physics.Arcade.Body
   keys: number = 0
+  onUpdate: (update: { x: number; y: number }) => void
 
-  constructor(scene: Phaser.Scene, texture: string) {
+  constructor(
+    scene: Phaser.Scene,
+    texture: string,
+    onUpdate: (update: { x: number; y: number }) => void,
+  ) {
     super(scene, initialPlayerPosition.x, initialPlayerPosition.y, texture)
+
+    this.onUpdate = onUpdate
 
     scene.add.existing(this)
     scene.physics.add.existing(this)
@@ -35,6 +42,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.handleInput()
+    this.onUpdate({ x: this.x, y: this.y })
   }
 
   handleHit(): void {

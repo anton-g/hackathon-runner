@@ -16,8 +16,8 @@ function App() {
   const [name, setName] = useLocalStorage<string>('player-name', '')
 
   useEffect(() => {
-    socket.on('foo', () => console.log('hello'))
-  }, [])
+    if (name) socket.emit('join', name)
+  }, [name])
 
   const handleJoin = (e: any) => {
     e.preventDefault()
@@ -70,6 +70,7 @@ function App() {
         <GameComponent
           onScore={handleScore}
           enabled={Boolean(name)}
+          socket={socket}
         ></GameComponent>
       </GameWrapper>
       <Sections>
