@@ -1,0 +1,59 @@
+name: hackathon-runner
+region: ams
+static_sites:
+  - build_command: npm run build
+    environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: anton-g/hackathon-runner
+    name: hackathon-runner-client
+    routes:
+      - path: /
+    source_dir: ./client/
+    envs:
+      - key: REACT_APP_API_URL
+        value: ${hackathon-runner-api.PUBLIC_URL}
+        scope: BUILD_TIME
+services:
+  - build_command: npm run build
+    environment_slug: node-js
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: anton-g/hackathon-runner
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xs
+    name: hackathon-runner-api
+    routes:
+      - path: /api
+    run_command: npm run start:prod
+    source_dir: ./server/
+    envs:
+      - key: DB_HOST
+        value: ${hackathon-runner-db.HOSTNAME}
+        scope: RUN_TIME
+      - key: DB_PORT
+        value: ${hackathon-runner-db.PORT}
+        scope: RUN_TIME
+      - key: DB_USER
+        value: ${hackathon-runner-db.USERNAME}
+        scope: RUN_TIME
+      - key: DB_PASSWORD
+        value: ${hackathon-runner-db.PASSWORD}
+        scope: RUN_TIME
+      - key: DB_NAME
+        value: ${hackathon-runner-db.DATABASE}
+        scope: RUN_TIME
+      - key: NODE_ENV
+        value: production
+        scope: RUN_TIME
+databases:
+  # - name: hackathon-runner-redis
+  #   engine: REDIS
+  #   production: true
+  #   cluster_name: hackathon-runner-db-cluster
+  - name: hackathon-runner-db
+    engine: PG
+    production: false
