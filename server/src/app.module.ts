@@ -36,7 +36,12 @@ import { Score } from './score.entity'
           database: configService.get('DB_NAME'),
           entities: [Score],
           synchronize: true,
-          ssl: configService.get('NODE_ENV') === 'production',
+          ssl:
+            configService.get('NODE_ENV') === 'production'
+              ? {
+                  rejectUnauthorized: false,
+                }
+              : false,
         }
       },
       inject: [ConfigService],
