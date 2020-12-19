@@ -15,7 +15,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.5",
     "@types/webfontloader": "^1.6.32",
-    "phaser": "^3.24.1",
+    "phaser": "^3.50.0",
     "phaser-animated-tiles": "github:anton-g/phaser-animated-tiles",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

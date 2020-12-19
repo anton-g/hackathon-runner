@@ -74,10 +74,10 @@ export class GameScene extends Phaser.Scene {
     this.otherPlayer = new OtherPlayer(this, 'player', 35, 300)
 
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
-    map.createDynamicLayer('Cosmetics', tileset)
-    const c2 = map.createDynamicLayer('Cosmetics2', tileset)
+    map.createLayer('Cosmetics', tileset)
+    const c2 = map.createLayer('Cosmetics2', tileset)
     c2.setAlpha(0.3)
-    const platforms = map.createDynamicLayer('Platforms', tileset)
+    const platforms = map.createLayer('Platforms', tileset)
     platforms.setCollisionByExclusion([-1], true)
 
     this.animatedTiles.init(map)
@@ -150,7 +150,7 @@ export class GameScene extends Phaser.Scene {
   setupUI(): void {
     this.scoreText = this.add.text(24, 16, `Gems:`, {
       fontSize: '10px',
-      fill: 'black',
+      color: 'black',
       fontFamily: '"Press Start 2P"',
     })
     this.scoreText.setScrollFactor(0)
@@ -161,7 +161,7 @@ export class GameScene extends Phaser.Scene {
       .text(screenCenterX, 30, `00:00:00`, {
         fontSize: '20px',
         fontFamily: '"Press Start 2P"',
-        fill: 'black',
+        color: 'black',
       })
       .setOrigin(0.5, 0)
     this.timeText.setScrollFactor(0)
@@ -174,7 +174,7 @@ export class GameScene extends Phaser.Scene {
       .text(screenCenterX, 10, 'Move to start', {
         fontSize: '12px',
         fontFamily: '"Press Start 2P"',
-        fill: 'black',
+        color: 'black',
       })
       .setOrigin(0.5, 0)
     this.instructionText.setScrollFactor(0)
