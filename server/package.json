@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@geckos.io/snapshot-interpolation": "^1.0.1",
+    "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^7.5.1",
+    "@nestjs/config": "^0.6.1",
     "@nestjs/core": "^7.5.1",
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/typeorm": "^7.1.5",
