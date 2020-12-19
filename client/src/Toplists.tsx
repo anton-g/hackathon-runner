@@ -18,7 +18,7 @@ export function Toplists() {
   const [toplists, setToplists] = useState<ToplistsType | null>()
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL ?? '/api'}pi/toplists`)
+    fetch(`${process.env.REACT_APP_API_URL ?? '/api'}/toplists`)
       .then((r) => r.json())
       .then((r) => setToplists(r))
   }, [])

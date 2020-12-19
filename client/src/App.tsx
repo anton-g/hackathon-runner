@@ -10,7 +10,10 @@ import { Instructions } from './Instructions'
 import { Toplists } from './Toplists'
 import { useLocalStorage } from './useLocalStorage'
 
-const socket = io(process.env.REACT_APP_API_URL ?? '')
+console.log(process.env.REACT_APP_API_URL)
+const socket = io({
+  path: process.env.REACT_APP_API_URL ? '/api/socket.io' : '/socket.io',
+})
 
 function App() {
   const [name, setName] = useLocalStorage<string>('player-name', '')
