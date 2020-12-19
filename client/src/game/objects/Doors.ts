@@ -6,7 +6,7 @@ export class Doors extends Phaser.Physics.Arcade.Group {
   constructor(
     world: Phaser.Physics.Arcade.World,
     scene: Phaser.Scene,
-    map: Phaser.Tilemaps.Tilemap
+    map: Phaser.Tilemaps.Tilemap,
   ) {
     super(world, scene, {
       allowGravity: false,
@@ -15,7 +15,7 @@ export class Doors extends Phaser.Physics.Arcade.Group {
 
     this.initialDoorObjs = map.getObjectLayer('Doors').objects
     this.initialDoorObjs.forEach((doorObj) =>
-      this.addDoor(doorObj.x!, doorObj.y!)
+      this.addDoor(doorObj.x!, doorObj.y!),
     )
 
     this.reset = this.reset.bind(this)
@@ -29,8 +29,8 @@ export class Doors extends Phaser.Physics.Arcade.Group {
   }
 
   handleHit(
-    obj1: Phaser.Types.Physics.Arcade.GameObjectWithDynamicBody,
-    obj2: Phaser.Types.Physics.Arcade.GameObjectWithDynamicBody
+    obj1: Phaser.Types.Physics.Arcade.GameObjectWithBody,
+    obj2: Phaser.Types.Physics.Arcade.GameObjectWithBody,
   ): void {
     const player = obj1 as Player
     if (player.hasKey()) {
