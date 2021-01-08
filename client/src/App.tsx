@@ -14,6 +14,10 @@ const socket = io({
   path: (process.env.REACT_APP_API_URL ?? '') + '/socket.io',
 })
 
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  navigator.userAgent,
+)
+
 function App() {
   const [name, setName] = useLocalStorage<string>('player-name', '')
 
@@ -38,8 +42,14 @@ function App() {
   return (
     <Wrapper>
       <Header></Header>
+      {isMobile && (
+        <MobileWarning>
+          It looks like you might be on a mobile device and the game requires a
+          keyboard to play but you can still watch other people run around.
+        </MobileWarning>
+      )}
       <GameWrapper>
-        {!name && (
+        {!name && !isMobile && (
           <div
             style={{
               position: 'absolute',
@@ -92,6 +102,14 @@ const Wrapper = styled.main`
   padding-bottom: 16px;
 `
 
+const MobileWarning = styled.p`
+  font-size: 8px;
+  background-color: black;
+  color: white;
+  padding: 8px;
+  line-height: 1.3;
+`
+
 const GameWrapper = styled.div`
   padding: 24px 0;
   position: relative;
@@ -103,6 +121,7 @@ const Sections = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
+  max-width: 100%;
 `
 
 const Input = styled.input`

@@ -8,9 +8,13 @@ const SI = new SnapshotInterpolation(30)
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  parent: 'game-anchor',
-  width: 48 * 16,
-  height: 28 * 16,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    parent: 'game-anchor',
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 48 * 16,
+    height: 28 * 16,
+  },
   render: {
     pixelArt: true,
   },
