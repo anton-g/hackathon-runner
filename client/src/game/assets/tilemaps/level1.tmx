@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="315">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="316">
  <editorsettings>
   <export target="level1.json" format="json"/>
  </editorsettings>
@@ -160,16 +160,6 @@
     <property name="type" value="spike"/>
    </properties>
   </object>
-  <object id="213" gid="123" x="400" y="400" width="16" height="16">
-   <properties>
-    <property name="type" value="spike"/>
-   </properties>
-  </object>
-  <object id="214" gid="123" x="416" y="400" width="16" height="16">
-   <properties>
-    <property name="type" value="spike"/>
-   </properties>
-  </object>
   <object id="215" gid="123" x="864" y="416" width="16" height="16">
    <properties>
     <property name="type" value="spike"/>
@@ -246,6 +236,11 @@
    </properties>
   </object>
   <object id="301" gid="123" x="1408" y="192" width="16" height="16">
+   <properties>
+    <property name="type" value="spike"/>
+   </properties>
+  </object>
+  <object id="315" gid="123" x="512" y="432" width="16" height="16">
    <properties>
     <property name="type" value="spike"/>
    </properties>

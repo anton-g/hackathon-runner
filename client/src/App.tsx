@@ -10,9 +10,8 @@ import { Instructions } from './Instructions'
 import { Toplists } from './Toplists'
 import { useLocalStorage } from './useLocalStorage'
 
-console.log(process.env.REACT_APP_API_URL)
 const socket = io({
-  path: process.env.REACT_APP_API_URL ? '/api/socket.io' : '/socket.io',
+  path: (process.env.REACT_APP_API_URL ?? '') + '/socket.io',
 })
 
 function App() {

@@ -21,7 +21,7 @@ const doorAtlasJson = require('../assets/images/door_atlas.json')
 
 export class GameScene extends Phaser.Scene {
   private state: 'Start' | 'Playing' | 'Dead' | 'Won' = 'Start'
-  private otherPlayer!: OtherPlayer
+  private otherPlayers: { [key: string]: OtherPlayer } = {}
   private player!: Player
   private dangers!: Phaser.Physics.Arcade.Group
   private coins!: Coins
@@ -70,8 +70,6 @@ export class GameScene extends Phaser.Scene {
     this.player = new Player(this, 'player', (update) =>
       (this.game as Game).socket.volatile.emit('input', update),
     )
-
-    this.otherPlayer = new OtherPlayer(this, 'player', 35, 300)
 
     const tileset = map.addTilesetImage('platformer', 'tiles', 16, 16, 1, 3)
     map.createLayer('Cosmetics', tileset)
@@ -293,12 +291,28 @@ export class GameScene extends Phaser.Scene {
     this.timeText.setText(msToTime(this.timer.getElapsed()))
 
     const snapshot = (this.game as Game).SI.calcInterpolation('x y')
-    if (snapshot?.state) {
-      snapshot.state.forEach((s) => {
-        if (s.id === (this.game as Game).socket.id) return
+    if (!snapshot?.state) return
 
-        this.otherPlayer.update(s.x as number, s.y as number)
-      })
-    }
+    snapshot.state.forEach((s) => {
+      if (s.id === (this.game as Game).socket.id) return
+
+      if (this.otherPlayers[s.id]) {
+        this.otherPlayers[s.id].update(s.x as number, s.y as number)
+      } else {
+        this.otherPlayers[s.id] = new OtherPlayer(
+          this,
+          'player',
+          s.id,
+          s.x as number,
+          s.y as number,
+        )
+      }
+    })
+
+    Object.keys(this.otherPlayers).forEach((x) => {
+      if (snapshot.state.findIndex((s) => s.id === x) === -1) {
+        this.otherPlayers[x].destroy()
+      }
+    })
   }
 }
