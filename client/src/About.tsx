@@ -26,6 +26,9 @@ export function About() {
         </a>
         ).
       </p>
+      <p>
+        Built by <a href="https://twitter.com/awnton">Anton</a>
+      </p>
     </Section>
   )
 }
