@@ -79,71 +79,16 @@ function App() {
             ).
           </SectionText>
           <SectionText>
-            The most technically exciting feature is probably the "ghosts" that
-            you see when playing. They are real time representations of every
-            other player that is active right now.
-          </SectionText>
-          <SectionText>
             The entire thing is also open source (
             <Link href="https://github.com/anton-g/hackathon-runner">link</Link>
             ) and some of the progress building this is documented on DEV (
-            <Link href="https://dev.to">link</Link>).
+            <Link href="https://dev.to/awnton/do-hackathon-runner-devlog-1-28pd">
+              link
+            </Link>
+            ).
           </SectionText>
         </Section>
       </Sections>
-      <Section>
-        <SectionTitle>TOP LISTS</SectionTitle>
-        <TopLists>
-          <TopList>
-            <span>5 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>4 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>3 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>2 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>1 gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-          <TopList>
-            <span>No gems</span>
-            <ol>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-              <li>Anton - 00:00:01</li>
-            </ol>
-          </TopList>
-        </TopLists>
-      </Section>
     </Wrapper>
   )
 }
