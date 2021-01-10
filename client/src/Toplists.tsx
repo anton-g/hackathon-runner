@@ -89,7 +89,7 @@ export function Toplists() {
           </ol>
         </TopList>
         <TopList>
-          <span>1 gems</span>
+          <span>1 gem</span>
           <ol>
             {toplists?.one.map((x, idx) => (
               <li key={idx}>
