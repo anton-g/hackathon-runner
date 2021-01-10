@@ -10,8 +10,6 @@ export class OtherPlayer extends Phaser.Physics.Arcade.Sprite {
 
     this.alpha = 0.4
     scene.add.existing(this)
-
-    console.log('creating player')
   }
 
   update(x: number, y: number): void {

@@ -16,6 +16,7 @@ type ToplistsType = {
 
 export function Toplists() {
   const [toplists, setToplists] = useState<ToplistsType | null>()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL ?? '/api'}/toplists`)
@@ -23,9 +24,25 @@ export function Toplists() {
       .then((r) => setToplists(r))
   }, [])
 
+  const refresh = () => {
+    setLoading(true)
+    fetch(`${process.env.REACT_APP_API_URL ?? '/api'}/toplists`)
+      .then((r) => r.json())
+      .then((r) => setToplists(r))
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }
+
   return (
     <Section>
-      <h2>TOP LISTS</h2>
+      <TitleBar>
+        <Title>TOP LISTS</Title>
+        <Button disabled={loading} onClick={refresh}>
+          Refresh
+        </Button>
+      </TitleBar>
       <ListOfToplists>
         <TopList>
           <span>5 gems</span>
@@ -97,6 +114,30 @@ export function Toplists() {
     </Section>
   )
 }
+
+const TitleBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`
+
+const Title = styled.h2`
+  display: inline-block;
+`
+
+const Button = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  font-family: 'Press Start 2P';
+  cursor: pointer;
+  padding: 4px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`
 
 const ListOfToplists = styled.div`
   display: flex;
