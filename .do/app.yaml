@@ -13,7 +13,7 @@ static_sites:
     source_dir: ./client/
     envs:
       - key: REACT_APP_API_URL
-        value: ${hackathon-runner-api.PUBLIC_URL}
+        value: ${hackathon-runner-api.PUBLIC_ROUTE_PATH}
         scope: BUILD_TIME
 services:
   - build_command: npm run build
@@ -56,7 +56,7 @@ services:
         value: ${hackathon-runner-redis.PASSWORD}
         scope: RUN_TIME
       - key: REDIS_TLS
-        value: true
+        value: 'true'
         scope: RUN_TIME
       - key: NODE_ENV
         value: production
