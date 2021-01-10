@@ -1,21 +1,17 @@
 # HACKATHON RUNNER
 
 HACKATHON RUNNER is a small platform game built with the game engine
-Phaser. Besides the game istelf it has toplists and **real time "ghosts" of other players**. It was built with [Phaser3](https://phaser.io/phaser3), [React](https://reactjs.org), [NestJS](https://nestjs.com) and [Redis](https://redislabs.com) for [DigitalOceans App Platform Hackathon on DEV](https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k). . If you want to try it out yourself you can deploy your own version:
-
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/anton-g/hackathon-runner/tree/main)
+Phaser. Besides the game istelf it has toplists and **real time "ghosts" of other players**. It was built with [Phaser3](https://phaser.io/phaser3), [React](https://reactjs.org), [NestJS](https://nestjs.com) and [Redis](https://redislabs.com) for [DigitalOceans App Platform Hackathon on DEV](https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k). If you want to try it out yourself you can deploy your own version:
 
 You can read a bit more from the development [here](https://dev.to/awnton/do-hackathon-runner-devlog-1-28pd).
 
-IMAGE
+![gif of platform game](./game.gif)
 
 ## Running for development
 
 ### Dependencies
 
-HACKATHON RUNNER have one required external dependency, Postgres.
-
-Postgres is the database used to store the results for the top lists. To set it up locally you can use any of the methods described [here](https://www.postgresql.org/download/).
+HACKATHON RUNNER have one required external dependency which is Postgres. It is the database used to store the results for the top lists. To set it up locally you can use any of the methods described [here](https://www.postgresql.org/download/).
 
 > There is also an optional dependency in Redis, but you can [read more below](<#using-redis-(optional)>) if that is relevant.
 
@@ -67,7 +63,7 @@ If you want to host it on DigitalOcean with Redis the easiest way is to add a ne
 > doctl apps create --spec .do/spec.yaml
 ```
 
-**Update an existing app** (for example created with the "Deploy to DO" button above):
+**Update an existing app**:
 
 ```text
 > doctl apps list
