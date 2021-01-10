@@ -52,6 +52,12 @@ services:
       - key: REDIS_PORT
         value: ${hackathon-runner-redis.PORT}
         scope: RUN_TIME
+      - key: REDIS_PASSWORD
+        value: ${hackathon-runner-redis.PASSWORD}
+        scope: RUN_TIME
+      - key: REDIS_TLS
+        value: true
+        scope: RUN_TIME
       - key: NODE_ENV
         value: production
         scope: RUN_TIME

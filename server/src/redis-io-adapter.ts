@@ -15,6 +15,12 @@ export class RedisIoAdapter extends IoAdapter {
     this.pubClient = new RedisClient({
       host: configService.get('REDIS_HOST'),
       port: configService.get<number>('REDIS_PORT'),
+      auth_pass: configService.get('REDIS_PASSWORD'),
+      ...(configService.get('REDIS_TLS') && {
+        tls: {
+          host: configService.get('REDIS_HOST'),
+        },
+      }),
     })
     this.subClient = this.pubClient.duplicate()
   }

@@ -22,6 +22,8 @@ import { Score } from './score.entity'
         DB_NAME: Joi.string().required(),
         REDIS_HOST: Joi.string(),
         REDIS_PORT: Joi.number(),
+        REDIS_PASSWORD: Joi.string(),
+        REDIS_TLS: Joi.boolean(),
       }),
     }),
     TypeOrmModule.forRootAsync({
