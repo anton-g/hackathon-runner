@@ -15,6 +15,7 @@ function GameComponent({
   useEffect(() => {
     if (gameRef.current) {
       gameRef.current.enabled = true
+      gameRef.current.onScore = onScore
     } else {
       gameRef.current = new Game({
         onScore,
