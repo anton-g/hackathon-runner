@@ -7,23 +7,23 @@ Phaser. Besides the game istelf it has toplists and **real time "ghosts" of othe
 
 You can read a bit more from the development [here](https://dev.to/awnton/do-hackathon-runner-devlog-1-28pd).
 
+IMAGE
+
 ## Running for development
 
-### Prerequisites
+### Dependencies
 
-HACKATHON RUNNER have two external dependencies, Postgres and Redis.
+HACKATHON RUNNER have one required external dependency, Postgres.
 
 Postgres is the database used to store the results for the top lists. To set it up locally you can use any of the methods described [here](https://www.postgresql.org/download/).
 
-Redis is used to distribute the messages sent by the server if it's run across multiple nodes (ie to make sure all players are visible to everyone else). Follow [this guide](https://redis.io/topics/quickstart) to set it up on your machine.
-
-> This is in practice a rather unneccesary performance improvement unless the game is used by lots and lots of people, so you can disable redis by replacing `RedisIoAdapter` with `IoAdapter` in [`main.ts`](https://github.com/anton-g/hackathon-runner/blob/main/server/src/main.ts#L10).
+> There is also an optional dependency in Redis, but you can [read more below](<#using-redis-(optional)>) if that is relevant.
 
 ### Server
 
 To run the server:
 
-1. Create a `.env` file in `/server` and set the environment variables to the correct values:
+1. Create a `.env` file in `/server` and set the environment variables to the values corresponding to your Postgres database:
 
 ```text
 DB_HOST=localhost
@@ -31,8 +31,6 @@ DB_PORT=5432
 DB_USER=db_user
 DB_PASSWORD=
 DB_NAME=testdb
-REDIS_HOST=localhost
-REDIS_PORT=6379
 ```
 
 2. Run `npm install` in `/server`
@@ -46,6 +44,41 @@ The server should now be served at `localhost:3001`.
 1. Run `npm start` in `/client`
 
 The client should now be served at `localhost:3000`.
+
+### Using Redis (optional)
+
+Redis is used to distribute the messages sent by the server if it's run across multiple nodes (ie to make sure all players are visible to everyone else). This is probably an unneccesary performance optimization if you're just playing around with the game so it's completely optional.
+
+If you do wanna try it out locally you can follow [this guide](https://redis.io/topics/quickstart) to install Redis on your own machine.
+Then you need to add two more keys to your `.env` file:
+
+```text
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+#### Redis with DigitalOcean
+
+If you want to host it on DigitalOcean with Redis the easiest way is to add a new Redis Database Cluster on [DigitalOcean Cloud](https://cloud.digitalocean.com) and name it `hackathon-runner-db-cluster`. Then use the [`doctl`](https://www.digitalocean.com/docs/apis-clis/doctl/) CLI to create (or update) an app with the [app spec](https://github.com/anton-g/hackathon-runner/blob/main/.do/app.yaml). For example:
+
+**Create a new app**:
+
+```text
+> doctl apps create --spec .do/spec.yaml
+```
+
+**Update an existing app** (for example created with the "Deploy to DO" button above):
+
+```text
+> doctl apps list
+
+ID                 Spec Name         ...
+12341234-abcdabcd  hackathon-runner  ...
+
+> doctl apps update 12341234-abcdabcd --spec .do/app.yaml
+```
+
+> Remember to change the `repo` fields in the `app.yaml` if you've forked the repo.
 
 ## License
 
