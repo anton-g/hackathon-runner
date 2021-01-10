@@ -50,10 +50,6 @@ services:
         value: production
         scope: RUN_TIME
 databases:
-  - name: hackathon-runner-redis
-    engine: REDIS
-    production: true
-    cluster_name: hackathon-runner-db-cluster
   - name: hackathon-runner-db
     engine: PG
     production: false

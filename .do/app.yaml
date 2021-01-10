@@ -46,6 +46,12 @@ services:
       - key: DB_NAME
         value: ${hackathon-runner-db.DATABASE}
         scope: RUN_TIME
+      - key: REDIS_HOST
+        value: ${hackathon-runner-redis.HOSTNAME}
+        scope: RUN_TIME
+      - key: REDIS_PORT
+        value: ${hackathon-runner-redis.PORT}
+        scope: RUN_TIME
       - key: NODE_ENV
         value: production
         scope: RUN_TIME
