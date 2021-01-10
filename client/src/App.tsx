@@ -12,6 +12,7 @@ import { useLocalStorage } from './useLocalStorage'
 
 const socket = io({
   path: (process.env.REACT_APP_API_URL ?? '') + '/socket.io',
+  secure: process.env.NODE_ENV === 'production',
 })
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
